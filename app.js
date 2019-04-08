@@ -29,7 +29,7 @@ app.use(passport.session());
 
 
 //set up routes
-app.use('/auth',authRoutes)
+app.use('/',authRoutes)
 app.use('/profile',profileRoutes)
 app.use('/facebook',facebookRoutes);
 

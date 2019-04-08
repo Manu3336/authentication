@@ -15,7 +15,7 @@ router.get('/google', passport.authenticate('google', {
 router.get('/facebook', passport.authenticate('facebook'));
 
 
-router.get('/facebook/callback', passport.authenticate('facebook'), (req, res) => {
+router.get('https://aeto.herokuapp.com/auth/google/callback', passport.authenticate('facebook'), (req, res) => {
     res.status(200).json({message:'Welcome!', success: true, user: req.user});
 });
 
@@ -25,7 +25,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
-router.get('/google/callback', passport.authenticate('google'), (req, res) => {
+router.get('https://aeto.herokuapp.com/auth/google/callback', passport.authenticate('google'), (req, res) => {
     res.status(200).json({message:'Welcome!', success: true, user: req.user});
 });
 

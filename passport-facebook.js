@@ -18,7 +18,7 @@ passport.use(new FacebookStrategy(
     {
         clientID: keys.facebook.facebookAppID,
         clientSecret: keys.facebook.facebookAppSecret,
-        callbackURL: 'https://aeto.herokuapp.com/auth/facebook/callback',
+        callbackURL: 'https://aeto.herokuapp.com/auth/google/callback',
     },
     (req, accessToken, refreshToken, profile, done) => {
         // console.log(profile.id);
