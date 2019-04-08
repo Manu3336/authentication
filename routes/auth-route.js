@@ -25,7 +25,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
-router.get('https://aeto.herokuapp.com/auth/google/callback', passport.authenticate('google'), (req, res) => {
+router.get('https://aeto.herokuapp.com/auth/facebook/callback', passport.authenticate('google'), (req, res) => {
     res.status(200).json({message:'Welcome!', success: true, user: req.user});
 });
 

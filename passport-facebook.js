@@ -18,7 +18,7 @@ passport.use(new FacebookStrategy(
     {
         clientID: keys.facebook.facebookAppID,
         clientSecret: keys.facebook.facebookAppSecret,
-        callbackURL: 'https://aeto.herokuapp.com/auth/google/callback',
+        callbackURL: 'https://aeto.herokuapp.com/auth/facebook/callback',
     },
     (req, accessToken, refreshToken, profile, done) => {
         // console.log(profile.id);
@@ -31,7 +31,7 @@ passport.use(new FacebookStrategy(
                 new User({
                     username: profile.displayName,
                     googleId: profile.id,
-                    provider: 'Google'
+                    provider: 'Facebook'
                 }).save().then((newUser) => {
                     console.log(`new user created ${newUser}`);
                     done(null, newUser); //callback to let passport know that we are done processing
