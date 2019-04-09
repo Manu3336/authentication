@@ -4,7 +4,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('./config/keys');
 
 const User = require('./models/user-model');
-
+const loginTime = new Date();
 
 passport.serializeUser((user, done)=>{
     done(null, user.id);
@@ -29,6 +29,7 @@ passport.use(new GoogleStrategy({
             new User({
                 username: profile.displayName,
                 googleId: profile.id,
+                timestamp:loginTime,
                 provider: 'Google'
             }).save().then((newUser) => {
                 console.log(`new user created ${newUser}`);

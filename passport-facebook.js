@@ -3,7 +3,7 @@ const passport = require('passport')
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 const User = require('./models/user-model');
-
+const loginTime = new Date();
 passport.serializeUser((user, done) => {
     done(null, user.id);
 })
@@ -23,14 +23,15 @@ passport.use(new FacebookStrategy(
     (req, accessToken, refreshToken, profile, done) => {
         // console.log(profile.id);
         // console.log({name: profile.displayName, id: profile.id});
-        User.findOne({ googleId: profile.id }).then((existingUser) => {
+        User.findOne({ facebookID: profile.id }).then((existingUser) => {
             if (existingUser) {
                 console.log(`existingUser ${existingUser}`)
                 done(null, existingUser);
             } else {
                 new User({
                     username: profile.displayName,
-                    googleId: profile.id,
+                    facebookID: profile.id,
+                    timestamp:loginTime,
                     provider: 'Facebook'
                 }).save().then((newUser) => {
                     console.log(`new user created ${newUser}`);
