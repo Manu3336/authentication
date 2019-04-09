@@ -13,6 +13,8 @@ const passport = require('passport');
 
 mongoose.connect(keys.mongodb.dbURI)
 
+app.enable("trust proxy");
+
 app.set('view engine', 'ejs');
 
 //Initialise cookie
