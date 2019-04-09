@@ -38,6 +38,11 @@ console.log('connected to db');
         scope: ['profile']
     }))
 
+    app.get('/auth/google/callback', passport.authenticate('google'), (req, res)=>{
+        //    return res.redirect('/loggedin')
+           console.log("inside callback")
+        });
+
     app.get('/users', function (req, res) {
        
     });
@@ -50,10 +55,7 @@ console.log('connected to db');
     });
 
 
-    app.get('/auth/google/callback', passport.authenticate('google'), (req, res)=>{
-    //    return res.redirect('/loggedin')
-       console.log("inside callback")
-    });
+
 
     // router.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
     //     // res.send('you are on callback page')

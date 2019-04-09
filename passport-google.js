@@ -19,7 +19,7 @@ passport.deserializeUser((id, done)=>{
 passport.use(new GoogleStrategy({
     clientID: keys.google.googleClientID,
     clientSecret: keys.google.googleClientSecret,
-    callbackURL: "https://aeto.herokuapp.com/auth/google/callback"
+    callbackURL: "/auth/google/callback"
 }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ googleId: profile.id }).then((existingUser) => {
         if (existingUser) {
