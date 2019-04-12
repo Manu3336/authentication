@@ -13,5 +13,9 @@ router.get('/', authCheck, (req, res)=>{
     res.send('you are on profile page '+ req.user.username);
 })
 
+router.get('/manu', (req, res) => {
+    res.status(200).json({message:'Welcome! Manu Kapoor'});
+});
+
 
 module.exports = router;

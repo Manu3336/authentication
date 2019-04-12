@@ -6,6 +6,8 @@ router.get('/login', (req, res) => {
     res.render('login');
 });
 
+
+
 //GOOGLE
 
 router.get('/google', passport.authenticate('google', {
@@ -30,6 +32,10 @@ router.get('/logout', (req, res) => {
     req.logout();
     res.redirect('/')
 });
+
+// router.get('/manu', (req, res) => {
+//     res.status(200).json({message:'Welcome! Manu'});
+// });
 
 
 

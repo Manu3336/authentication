@@ -5,7 +5,9 @@ const userSchema = new Schema({
     username: String,
     googleId: String,
     facebookID: String,
-    timestamp: String
+    timestamp: String,
+    email: String,
+    password: String
 });
 
 
