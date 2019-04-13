@@ -8,6 +8,7 @@ const userSchema = new Schema({
     timestamp: String,
     email: String,
     password: String,
+    verified: String
 });
 
 

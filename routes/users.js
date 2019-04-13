@@ -7,10 +7,15 @@ let User = require('../models/user-model');
 const bcryp = require('bcryptjs');
 const loginTime = new Date();
 const passportLocalPath = require('../passport-Local');
+
 router.get('/register', (req, res) => {
     res.render('register');
 })
 
+
+router.get('/verifyEmail', (req, res) => {
+    res.render('verifyEmail');
+})
 
 
 router.post('/register', (req, res, errors) => {
@@ -20,7 +25,8 @@ router.post('/register', (req, res, errors) => {
     const newUser = new User({
         email: email,
         username: username,
-        password: password
+        password: password,
+        verified: 'false'
     })
     console.log("email is " + email);
     bcryp.genSalt(10, function (err, salt) {
@@ -39,6 +45,7 @@ router.post('/register', (req, res, errors) => {
             newUser.save().then((newUserCreated) => {
                 console.log(`new user created ${newUserCreated}`);
                 done(null, newUserCreated); //callback to let passport know that we are done processing
+                res.redirect('/')
             });
         }
     })
@@ -57,6 +64,21 @@ router.post('/login', (req, res, next)=>{
         failureRedirect: '/login'
 })(req, res, next)
 console.log(req.user);
+})
+
+
+//Verify Email
+router.post('/verifyEmail', (req, res, errors) => {
+    const email = req.body.email;
+    const newUser = new User({
+        email:email,
+        verified: 'true'
+    })
+    User.findOneAndUpdate({email: email}, {$set:{verified:"true"}}, {new: true}, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+    });
 })
 
 
