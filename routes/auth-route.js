@@ -25,7 +25,10 @@ router.get('/facebook', passport.authenticate('facebook'));
 
 router.get('/facebook/callback', passport.authenticate('facebook'), (req, res) => {
     res.status(200).json({message:'Welcome!', success: true, user: req.user});
+    // res.redirect('/', {message:'Welcome!', success: true, user: req.user})
 });
+
+//Local
 
 
 router.get('/logout', (req, res) => {
