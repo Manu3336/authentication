@@ -36,6 +36,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
+
 // router.get('/manu', (req, res) => {
 //     res.status(200).json({message:'Welcome! Manu'});
 // });
