@@ -11,7 +11,6 @@ const facebookSetup = require('./passport-facebook');
 
 
 
-
 const keys = require('./config/keys');
 const PORT = process.env.PORT || 5000
 const app = express();
@@ -43,8 +42,7 @@ app.use(cookieSession({
 //Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
-
+// app.use(flash());
 //Logout to set user object to null
 
 app.get('*', (req, res, next)=>{

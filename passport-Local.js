@@ -13,18 +13,34 @@ const app = express();
 // console.log('connected to db');
 
 
-  passport.use(new LocalStrategy(function (username, password, done) {
+  passport.use(new LocalStrategy(function ( username, password, done) {
     let query = { username: username }
     User.findOne(query, function(err, user) {
+      console.log("Manu inside function")
         if (err) throw err;
         if (!user) {
-          return done(null, false, { message: 'Nouser found' });
+          console.log('*** no username')
+          return done(null, false, { message: 'Incorrect username.' });
         }
+        if (!user.verified) {
+          console.log('*** Please verify the user')
+          return done(null, false, { message: 'Please verify the user' });
+        }
+
         bcryp.compare(password, user.password, (err, isMatch) => {
-          if (err) throw err;
+          if (err) {
+            console.log('*** error ', err)
+            return done(null, false, { message:err })};
+          if (!isMatch){   
+         console.log('*** Invalid password found')
+          return done(null, false, { message: 'Invalid password found' });
+        }
           if (isMatch) {
-            return done(null, user);
+            console.log('*** ', user)
+            return done( null, user);
+            
           } else {
+            console.log('*** Wrong Password')
             return done(null, false, { message: 'Wrong Password' });
           }
         })
@@ -42,6 +58,9 @@ const app = express();
     })
   })
 
+
+
+  
 
  
 

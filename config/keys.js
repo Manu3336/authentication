@@ -14,6 +14,9 @@ module.exports = {
     },
     session:{
         cookieKey: "thiIsARandomString"
+    },
+    tokenKey:{
+       keyValue: "thiIsARandomStringqwertyuioplkjhgfdsazxcvbnmkloiuytrdcvbhnjkmnbvcfdrtyhjnbvcdftghjnb"
     }
 };
 

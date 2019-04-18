@@ -8,7 +8,10 @@ const userSchema = new Schema({
     timestamp: String,
     email: String,
     password: String,
-    verified: String
+    verified: { type: Boolean, default: false },
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    registrationToken: String
 });
 
 

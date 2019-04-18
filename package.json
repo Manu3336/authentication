@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "engines": { 
-    "node": "8.9.4" 
- },
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
@@ -28,6 +25,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.2",
     "mongoose": "^5.4.22",
+    "nodemailer": "^6.1.0",
     "nodemon": "^1.18.10",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
