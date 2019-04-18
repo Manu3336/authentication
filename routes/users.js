@@ -60,7 +60,6 @@ router.post('/register', (req, res, errors) => {
             return res.status(400).json({ message: 'Email already exist', statusCode: "400", existingUserDetails: existingUser.username });
             // done(null, existingUser);
         } else {
-
             newUser.save().then((newUserCreated) => {
                 var transporter = nodemailer.createTransport({
                     host: "smtp-mail.outlook.com", // hostname
@@ -70,22 +69,23 @@ router.post('/register', (req, res, errors) => {
                         ciphers: 'SSLv3'
                     },
                     auth: {
-                        user: 'manu.kapoor@outlook.com',
-                        pass: 'Kapoor@91'
+                        user: '*********',
+                        pass: '*******'
                     }
                 });
                 const mailOptions = {
-                    from: 'manu.kapoor@outlook.com',
-                    to: 'chattel6@gmail.com',
+                    from: '*********',
+                    to: '**********',
                     subject: 'Login credentials for aeto',
-                    html: `Username: ${'http://localhost:5000/verifyEmail'}/${registrationToken}`
+                    html: `Username: ${req.body.email} <br> https://aeto.herokuapp.com//${registrationToken}`
+                    // html: `Username: ${'http://localhost:5000/verifyEmail'}/${registrationToken}`
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
                     if (error) {
                         console.log(error);
                     } else {
                         //   console.log('Email sent: ' + info.response);
-                        res.redirect('/');
+                        // res.redirect('/');
                     }
                 });
                 return res.status(200).json({ message: 'User Registered', statusCode: "200", newUserDetails: newUserCreated });
