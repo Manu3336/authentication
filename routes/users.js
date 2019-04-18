@@ -124,40 +124,7 @@ router.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 
 //Verify Email
-router.post(`/verifyEmail`, (req, res, err) => {
-    const newUserEmail = req.body.email;
-    try{
-        User.findOneAndUpdate({ email: newUserEmail }, { $set: { verified: true } , $unset: {registrationToken:''}}, { new: true }, (err, doc) => {
-            if (err) {
-                console.log("Something wrong when updating data!");
-                res.status(400).json({ message: 'Something wrong when updating data!', success: false });
-            } else {
-                res.status(200).json({ message: 'Email Verified! inpost', success: true });
-            }
-    
-        });
-    }
-    catch(err){
-        res.send(err)
-    }
-})
 
-
-// router.get('/verifyEmail', (req, res) => {
-//     try{
-//         User.findOneAndUpdate({ email: newUserEmail }, { $set: { verified: true } }, { new: true }, (err, doc) => {
-//             if (err) {
-//                 console.log("Something wrong when updating data!");
-//                 res.status(400).json({ message: 'Something wrong when updating data!', success: false });
-//             } else {
-//                 res.status(200).json({ message: 'Email Verified!', success: true });
-//                 console.log(user);
-//             }
-//         });
-//     }catch(err){
-//         res.send(err)
-//     }
-// })
 
 
 //Logout

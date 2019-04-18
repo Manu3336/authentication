@@ -4,12 +4,12 @@ const authRoutes = require('./routes/auth-route');
 const facebookRoutes = require('./routes/profile-route');
 const profileRoutes = require('./routes/profile-route');
 const localRoutes = require('./routes/users');
-
+let User = require('./models/user-model');
 const localSetup = require('./passport-Local');
 const passportSetup = require('./passport-google');
 const facebookSetup = require('./passport-facebook');
 
-
+const router = require('express').Router();
 
 const keys = require('./config/keys');
 const PORT = process.env.PORT || 5000
@@ -62,6 +62,31 @@ app.get('/', (req, res)=>{
     res.render('home');
 })
 
+app.get('/manu/:id', function(req, res){
+    res.send('id: ' + req.params.id);
+  });
+
+  app.get('/verifyEmail/:registrationToken', (req, res, err) => {
+    const registrationTokenValue = req.params.registrationToken;
+    console.log("TokenValue: " +registrationTokenValue)
+   console.log("user "+ User);
+    try{
+        User.findOneAndUpdate({ registrationToken: registrationTokenValue }, { $set: { verified: true } , $unset: {registrationToken:''}}, { new: true }, (err, doc) => {
+            if (err) {
+                console.log("Something wrong when updating data!");
+                res.status(400).json({ message: 'Something wrong when updating data!', success: false });
+            } else {
+                res.status(200).json({ message: 'Email Verified! inpost', success: true });
+            }
+        });
+    }
+    catch(err){
+        console.log("inside catch");
+        // res.send(err)
+        res.status(400).json({ message: 'Something wrong when updating data!', success: false });
+    }
+    // console.log("error "+ err);
+})
 
 
 app.listen(PORT,()=>{
