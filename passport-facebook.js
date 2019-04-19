@@ -31,8 +31,9 @@ passport.use(new FacebookStrategy(
                 new User({
                     username: profile.displayName,
                     facebookID: profile.id,
-                    timestamp:loginTime,
-                    provider: 'Facebook'
+                    userRegistrationTime:loginTime,
+                    provider: 'Facebook',
+                    verified: true
                 }).save().then((newUser) => {
                     console.log(`new user created ${newUser}`);
                     done(null, newUser); //callback to let passport know that we are done processing

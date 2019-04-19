@@ -5,13 +5,15 @@ const userSchema = new Schema({
     username: String,
     googleId: String,
     facebookID: String,
-    timestamp: String,
     email: String,
     password: String,
     verified: { type: Boolean, default: false },
     passwordResetToken: String,
     passwordResetExpires: Date,
-    registrationToken: String
+    userRegistrationTime: String,
+    registrationToken: String,
+    passwordResetTime: String
+
 });
 
 

@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 app.set('view engine', 'ejs');
 let User = require('../models/user-model');
-const bcryp = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const loginTime = new Date();
 const passportLocalPath = require('../passport-Local');
 const nodemailer = require("nodemailer");
@@ -12,10 +12,7 @@ const details = { emailCreated: '' };
 const jwt  = require('jsonwebtoken');
 const config = require('../config/keys')
 
-newUserEmail = "";
-module.exports = {
 
-}
 
 router.get('/register', (req, res) => {
     res.render('register');
@@ -28,7 +25,7 @@ router.get('/verifyEmail', (req, res) => {
 
 const registrationToken = jwt.sign({
     data: 'email id of the user'
-  }, config.tokenKey.keyValue, { expiresIn: '24h' });
+  }, config.tokenKey.keyValue);
 
 
 
@@ -36,18 +33,19 @@ const registrationToken = jwt.sign({
 router.post('/register', (req, res, errors) => {
     const email = req.body.email;
     const password = req.body.password;
-    const username = req.body.username;
+    // const username = req.body.username;
     const newUser = new User({
         email: email,
-        username: username,
+        username: email,
         password: password,
-        timestamp:loginTime,
+        userRegistrationTime:loginTime,
         verified: false,
-        registrationToken:registrationToken
+        registrationToken:registrationToken,
+        passwordResetTime: ''
     })
     // console.log("email is " + email);
-    bcryp.genSalt(10, function (err, salt) {
-        bcryp.hash(newUser.password, salt, function (err, hash) {
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(newUser.password, salt, function (err, hash) {
             if (err) {
                 console.log(err)
             }
@@ -69,15 +67,15 @@ router.post('/register', (req, res, errors) => {
                         ciphers: 'SSLv3'
                     },
                     auth: {
-                        user: '*********',
-                        pass: '*******'
+                        user: '###',
+                        pass: '####'
                     }
                 });
                 const mailOptions = {
-                    from: '*********',
-                    to: '**********',
+                    from: '###',
+                    to: '###',
                     subject: 'Login credentials for aeto',
-                    html: `Username: ${req.body.email} <br> https://aeto.herokuapp.com//${registrationToken}`
+                    html: `Username: ${req.body.email} <br> https://aeto.herokuapp.com/verifyEmail/${registrationToken}`
                     // html: `Username: ${'http://localhost:5000/verifyEmail'}/${registrationToken}`
                 };
                 transporter.sendMail(mailOptions, function (error, info) {
@@ -95,6 +93,8 @@ router.post('/register', (req, res, errors) => {
     })
 })
 
+
+
 router.get('/login', (req, res) => {
     res.render('login');
     // console.log("Inside Users")
@@ -102,25 +102,8 @@ router.get('/login', (req, res) => {
 
 //Login process
 
-// router.post('/login', (req, res, next) => {
-//     passport.authenticate('local', {
-//         successRedirect: 'Success',
-//         failureRedirect: 'Failure',
-//         failureFlash: true
-//     })(req, res, next)
-
-// })
 
 
-
-router.post('/login', passport.authenticate('local'), (req, res, next) => {
-    try{
-        res.status(200).json({ message: 'Welcome!', success: true });
-        console.log("Manu inside callback")
-    }catch(err){
-       res.send(err); 
-    }
-});
 
 
 //Verify Email
